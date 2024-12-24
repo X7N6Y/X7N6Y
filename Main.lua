@@ -20,13 +20,13 @@ if game.PlaceId == gameId then
 		Home = Window:AddTab({Title = "Home", Icon = "home"}),
 		Main = Window:AddTab({ Title = "Main", Icon = "menu" }),
 		Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
-		Testing = Window:AddTab({Title = "Testing", Icon = ""})
 	}
 
 	local Options = Fluent.Options
 
 	local autoCastEnabled = false
 	local autoReelEnabled = false
+	local autoShakeEnabled = false
 
 	do
 		Fluent:Notify({
@@ -88,23 +88,32 @@ if game.PlaceId == gameId then
 			end
 		end)
 		
-		Tabs.Testing:AddButton({
-			Title = "Dialog Button",
-			Callback = function()
-				Window:Dialog({
-					Title = "Test Dialog",
-					Content = "This is a test dialog in the testing tab.",
-					Buttons = {
-						{
-							Title = "Okay",
-							Callback = function()
-								print("Okay button pressed")
+		local AutoShakeToggle = Tabs.Main:AddToggle("AutoShake", {Title = "Auto Shake", Default = false})
+		AutoShakeToggle:OnChanged(function()
+			autoShakeEnabled = Options.AutoShake.Value
+			if autoShakeEnabled then
+				task.spawn(function()
+					while autoShakeEnabled do
+						local shakeButton = nil
+						for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetDescendants()) do
+							if v:IsA("TextButton") and v.Text == "SHAKE" then
+								shakeButton = v
+								break
 							end
-						}
-					}
-				})
+						end
+						if shakeButton then
+							game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.Default
+							game:GetService("VirtualInputManager"):SendMouseButtonEvent(shakeButton.AbsolutePosition.X + shakeButton.AbsoluteSize.X / 2, shakeButton.AbsolutePosition.Y + shakeButton.AbsoluteSize.Y / 2, 1, true, nil, false)
+							game:GetService("VirtualInputManager"):SendMouseButtonEvent(shakeButton.AbsolutePosition.X + shakeButton.AbsoluteSize.X / 2, shakeButton.AbsolutePosition.Y + shakeButton.AbsoluteSize.Y / 2, 1, false, nil, false)
+							game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.LockCenter
+							
+						end
+						wait(0.5)
+					end
+				end)
 			end
-		})
+		end)
+		
 		Tabs.Home:AddParagraph({
 			Title = "Credit",
 			Content = "Made by Azure"
