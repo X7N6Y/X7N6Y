@@ -38,7 +38,7 @@ iconImage.Position = UDim2.new(0, 5, 0, 5)
 iconImage.BackgroundTransparency = 1
 iconImage.Image = "rbxassetid://111176864113621"
 iconImage.Parent = mainFrame
-
+iconImage.ImageColor3 = Color3.fromRGB(255,255,255)
 
 local isGuiVisible = true
 
