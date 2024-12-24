@@ -13,9 +13,9 @@ local Window = Fluent:CreateWindow({
 })
 
 local Tabs = {
+	Home = Window:AddTab({Title = "Home", Icon = "home"}),
     Main = Window:AddTab({ Title = "Main", Icon = "" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
-	Home = Window:AddTab({Title = "Home", Icon = "home"}),
     Testing = Window:AddTab({Title = "Testing", Icon = ""})
 }
 
@@ -213,13 +213,6 @@ do
 	Tabs.Home:AddParagraph({
 		Title = "Credit",
 		Content = "Made by Azure"
-	})
-	Tabs.Home:AddButton({
-		Title = "Discord",
-		Description = "Discord Link",
-		Callback = function()
-			setclipboard("https://discord.gg/cUujpKKdtX")
-		end
 	})
 	Tabs.Home:AddButton({
 		Title = "Discord (Copy)",
