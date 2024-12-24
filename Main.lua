@@ -42,13 +42,13 @@ if game.PlaceId == gameId then
 			if autoCastEnabled then
 				task.spawn(function()
 					while autoCastEnabled do
-						local args = {
-							[1] = 100,
-							[2] = 1
-						}
-						
-						if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Wisdom Rod") then
-							game:GetService("Players").LocalPlayer.Character:FindFirstChild("Wisdom Rod").events.cast:FireServer(unpack(args))
+						local rod = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool")
+						if rod and rod:FindFirstChild("events") and rod.events:FindFirstChild("cast") then
+							local args = {
+								[1] = 100,
+								[2] = 1
+							}
+							rod.events.cast:FireServer(unpack(args))
 						end
 						wait(0.2)
 					end
@@ -60,13 +60,13 @@ if game.PlaceId == gameId then
 			Title = "Perfect Cast",
 			Description = "Cast your rod",
 			Callback = function()
-				local args = {
-					[1] = 100,
-					[2] = 1
-				}
-
-				if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Wisdom Rod") then
-					game:GetService("Players").LocalPlayer.Character:FindFirstChild("Wisdom Rod").events.cast:FireServer(unpack(args))
+				local rod = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool")
+				if rod and rod:FindFirstChild("events") and rod.events:FindFirstChild("cast") then
+					local args = {
+						[1] = 100,
+						[2] = 1
+					}
+					rod.events.cast:FireServer(unpack(args))
 				end
 			end
 		})
