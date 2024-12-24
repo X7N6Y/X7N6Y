@@ -14,7 +14,8 @@ local Window = Fluent:CreateWindow({
 
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
+    Testing = Window:AddTab({Title = "Testing", Icon = ""})
 }
 
 local Options = Fluent.Options
@@ -190,6 +191,24 @@ do
     Input:OnChanged(function()
         print("Input updated:", Input.Value)
     end)
+    
+    Tabs.Testing:AddButton({
+        Title = "Dialog Button",
+         Callback = function()
+            Window:Dialog({
+                Title = "Test Dialog",
+                Content = "This is a test dialog in the testing tab.",
+                Buttons = {
+                    {
+                        Title = "Okay",
+                        Callback = function()
+                            print("Okay button pressed")
+                        end
+                    }
+                }
+            })
+         end
+    })
 end
 
 SaveManager:SetLibrary(Fluent)
@@ -212,43 +231,3 @@ Fluent:Notify({
 })
 
 SaveManager:LoadAutoloadConfig()
-
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "Toggleui"
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-ScreenGui.ResetOnSpawn = false
-
-local Toggle = Instance.new("TextButton")
-Toggle.Name = "Toggle"
-Toggle.Parent = ScreenGui
-Toggle.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Toggle.BackgroundTransparency = 0.5
-Toggle.Position = UDim2.new(0, 0, 0.454706937, 0)
-Toggle.Size = UDim2.new(0, 50, 0, 50)
-Toggle.Font = Enum.Font.SourceSans
-Toggle.Text = ""
-Toggle.TextColor3 = Color3.fromRGB(248, 248, 248)
-Toggle.TextSize = 18.000
-Toggle.Draggable = true
-
-local Corner = Instance.new("UICorner")
-Corner.CornerRadius = UDim.new(0.2, 0)
-Corner.Parent = Toggle
-
-local Image = Instance.new("ImageLabel")
-Image.Name = "Icon"
-Image.Parent = Toggle
-Image.Size = UDim2.new(1, 0, 1, 0)
-Image.BackgroundTransparency = 1
-Image.Image = "rbxassetid://117239677500065" 
-
-local Corner2 = Instance.new("UICorner")
-Corner2.CornerRadius = UDim.new(0.2, 0)
-Corner2.Parent = Image
-
-local guiEnabled = false
-
-Toggle.MouseButton1Click:Connect(function()
-    guiEnabled = not guiEnabled
-    Window.Enabled = guiEnabled
-end)
