@@ -27,6 +27,9 @@ if game.PlaceId == gameId then
 	local autoCastEnabled = false
 	local autoReelEnabled = false
 	local autoShakeEnabled = false
+	local navigationActive = false
+	local lastCastTime = 0
+	local isMobile = UserInputService.TouchEnabled
 
 	do
 		Fluent:Notify({
@@ -49,6 +52,7 @@ if game.PlaceId == gameId then
 								[2] = 1
 							}
 							rod.events.cast:FireServer(unpack(args))
+							lastCastTime = tick()
 						end
 						wait(0.2)
 					end
@@ -67,6 +71,7 @@ if game.PlaceId == gameId then
 						[2] = 1
 					}
 					rod.events.cast:FireServer(unpack(args))
+					lastCastTime = tick()
 				end
 			end
 		})
@@ -101,14 +106,33 @@ if game.PlaceId == gameId then
 								break
 							end
 						end
-						if shakeButton then
-							game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.Default
-							game:GetService("VirtualInputManager"):SendMouseButtonEvent(shakeButton.AbsolutePosition.X + shakeButton.AbsoluteSize.X / 2, shakeButton.AbsolutePosition.Y + shakeButton.AbsoluteSize.Y / 2, 1, true, nil, false)
-							game:GetService("VirtualInputManager"):SendMouseButtonEvent(shakeButton.AbsolutePosition.X + shakeButton.AbsoluteSize.X / 2, shakeButton.AbsolutePosition.Y + shakeButton.AbsoluteSize.Y / 2, 1, false, nil, false)
-							game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.LockCenter
-							
+						
+						if shakeButton or tick() - lastCastTime < 0.5 then
+							if not navigationActive then
+								navigationActive = true
+								game:GetService("UserInputService").InputBegan:Connect(function(input, gp)
+                                   if input.KeyCode == (isMobile and Enum.KeyCode.Backquote or Enum.KeyCode.Backslash) then
+										navigationActive = not navigationActive
+										if navigationActive then
+											game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.Default
+										else
+											game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.LockCenter
+										end
+									end
+								end)
+							end
+							if navigationActive then
+								game:GetService("VirtualInputManager"):SendKeyEvent(false,Enum.KeyCode.Down,false,game)
+								wait(0.05)
+							end
+							if shakeButton then
+								game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.Default
+								game:GetService("VirtualInputManager"):SendMouseButtonEvent(shakeButton.AbsolutePosition.X + shakeButton.AbsoluteSize.X / 2, shakeButton.AbsolutePosition.Y + shakeButton.AbsoluteSize.Y / 2, 1, true, nil, false)
+								game:GetService("VirtualInputManager"):SendMouseButtonEvent(shakeButton.AbsolutePosition.X + shakeButton.AbsoluteSize.X / 2, shakeButton.AbsolutePosition.Y + shakeButton.AbsoluteSize.Y / 2, 1, false, nil, false)
+								game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.LockCenter
+							end
 						end
-						wait(0.5)
+						wait(0.1)
 					end
 				end)
 			end
