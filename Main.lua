@@ -31,6 +31,15 @@ toggleButton.Font = Enum.Font.SourceSans
 toggleButton.TextScaled = true
 toggleButton.Parent = mainFrame
 
+local iconImage = Instance.new("ImageLabel")
+iconImage.Name = "IconImage"
+iconImage.Size = UDim2.new(0, 25, 0, 25)
+iconImage.Position = UDim2.new(0, 5, 0, 5)
+iconImage.BackgroundTransparency = 1
+iconImage.Image = "rbxassetid://111176864113621"
+iconImage.Parent = mainFrame
+
+
 local isGuiVisible = true
 
 local function toggleGui()
