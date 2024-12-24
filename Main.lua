@@ -1,57 +1,254 @@
-local UserInputService = game:GetService("UserInputService")
-local Players = game:GetService("Players")
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
-local localPlayer = Players.LocalPlayer
-local playerGui = localPlayer:WaitForChild("PlayerGui")
+local Window = Fluent:CreateWindow({
+    Title = "Fluent " .. Fluent.Version,
+    SubTitle = "by dawid",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
 
-local mainGui = Instance.new("ScreenGui")
-mainGui.Name = "MainGui"
-mainGui.Parent = playerGui
-mainGui.ResetOnSpawn = false
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
 
-local mainFrame = Instance.new("Frame")
-mainFrame.Name = "MainFrame"
-mainFrame.Size = UDim2.new(0, 200, 0, 100)
-mainFrame.Position = UDim2.new(0.5, -100, 0.5, -50)
-mainFrame.BackgroundColor3 = Color3.fromRGB(50,50,50)
-mainFrame.BorderColor3 = Color3.fromRGB(0,0,0)
-mainFrame.BorderSizePixel = 2
-mainFrame.Parent = mainGui
+local Options = Fluent.Options
 
-local toggleButton = Instance.new("TextButton")
-toggleButton.Name = "ToggleButton"
-toggleButton.Text = "Toggle"
-toggleButton.Size = UDim2.new(0, 100, 0, 30)
-toggleButton.Position = UDim2.new(0.5, -50, 0.5, -15)
-toggleButton.BackgroundColor3 = Color3.fromRGB(80,80,80)
-toggleButton.TextColor3 = Color3.fromRGB(255,255,255)
-toggleButton.BorderColor3 = Color3.fromRGB(0,0,0)
-toggleButton.BorderSizePixel = 2
-toggleButton.Font = Enum.Font.SourceSans
-toggleButton.TextScaled = true
-toggleButton.Parent = mainFrame
+do
+    Fluent:Notify({
+        Title = "Notification",
+        Content = "This is a notification",
+        SubContent = "SubContent",
+        Duration = 5
+    })
 
-local iconImage = Instance.new("ImageLabel")
-iconImage.Name = "IconImage"
-iconImage.Size = UDim2.new(0, 25, 0, 25)
-iconImage.Position = UDim2.new(0, 5, 0, 5)
-iconImage.BackgroundTransparency = 1
-iconImage.Image = "rbxassetid://111176864113621"
-iconImage.Parent = mainFrame
-iconImage.ImageColor3 = Color3.fromRGB(255,255,255)
+    Tabs.Main:AddParagraph({
+        Title = "Paragraph",
+        Content = "This is a paragraph.\nSecond line!"
+    })
 
-local isGuiVisible = true
+    Tabs.Main:AddButton({
+        Title = "Button",
+        Description = "Very important button",
+        Callback = function()
+            Window:Dialog({
+                Title = "Title",
+                Content = "This is a dialog",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            print("Confirmed the dialog.")
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
+        end
+    })
 
-local function toggleGui()
-	isGuiVisible = not isGuiVisible
-	mainFrame.Visible = isGuiVisible
+    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:", Options.MyToggle.Value)
+    end)
+
+    Options.MyToggle:SetValue(false)
+
+    local Slider = Tabs.Main:AddSlider("Slider", {
+        Title = "Slider",
+        Description = "This is a slider",
+        Default = 2,
+        Min = 0,
+        Max = 5,
+        Rounding = 1,
+        Callback = function(Value)
+            print("Slider was changed:", Value)
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        print("Slider changed:", Value)
+    end)
+
+    Slider:SetValue(3)
+
+    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+        Title = "Dropdown",
+        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
+        Multi = false,
+        Default = 1,
+    })
+
+    Dropdown:SetValue("four")
+
+    Dropdown:OnChanged(function(Value)
+        print("Dropdown changed:", Value)
+    end)
+
+    local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
+        Title = "Dropdown",
+        Description = "You can select multiple values.",
+        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
+        Multi = true,
+        Default = {"seven", "twelve"},
+    })
+
+    MultiDropdown:SetValue({
+        three = true,
+        five = true,
+        seven = false
+    })
+
+    MultiDropdown:OnChanged(function(Value)
+        local Values = {}
+        for Value, State in next, Value do
+            table.insert(Values, Value)
+        end
+        print("Mutlidropdown changed:", table.concat(Values, ", "))
+    end)
+
+    local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
+        Title = "Colorpicker",
+        Default = Color3.fromRGB(96, 205, 255)
+    })
+
+    Colorpicker:OnChanged(function()
+        print("Colorpicker changed:", Colorpicker.Value)
+    end)
+    
+    Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
+
+    local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
+        Title = "Colorpicker",
+        Description = "but you can change the transparency.",
+        Transparency = 0,
+        Default = Color3.fromRGB(96, 205, 255)
+    })
+
+    TColorpicker:OnChanged(function()
+        print(
+            "TColorpicker changed:", TColorpicker.Value,
+            "Transparency:", TColorpicker.Transparency
+        )
+    end)
+
+    local Keybind = Tabs.Main:AddKeybind("Keybind", {
+        Title = "KeyBind",
+        Mode = "Toggle",
+        Default = "LeftControl",
+        Callback = function(Value)
+            print("Keybind clicked!", Value)
+        end,
+        ChangedCallback = function(New)
+            print("Keybind changed!", New)
+        end
+    })
+
+    Keybind:OnClick(function()
+        print("Keybind clicked:", Keybind:GetState())
+    end)
+
+    Keybind:OnChanged(function()
+        print("Keybind changed:", Keybind.Value)
+    end)
+
+    task.spawn(function()
+        while true do
+            wait(1)
+            local state = Keybind:GetState()
+            if state then
+                print("Keybind is being held down")
+            end
+            if Fluent.Unloaded then break end
+        end
+    end)
+
+    Keybind:SetValue("MB2", "Toggle")
+
+    local Input = Tabs.Main:AddInput("Input", {
+        Title = "Input",
+        Default = "Default",
+        Placeholder = "Placeholder",
+        Numeric = false,
+        Finished = false,
+        Callback = function(Value)
+            print("Input changed:", Value)
+        end
+    })
+
+    Input:OnChanged(function()
+        print("Input updated:", Input.Value)
+    end)
 end
 
-toggleButton.MouseButton1Click:Connect(toggleGui)
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
 
-UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-	if gameProcessedEvent then return end
-	if input.KeyCode == Enum.KeyCode.RightShift then
-		toggleGui()
-	end
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+Window:SelectTab(1)
+
+Fluent:Notify({
+    Title = "Fluent",
+    Content = "The script has been loaded.",
+    Duration = 8
+})
+
+SaveManager:LoadAutoloadConfig()
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "Toggleui"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+local Toggle = Instance.new("TextButton")
+Toggle.Name = "Toggle"
+Toggle.Parent = ScreenGui
+Toggle.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Toggle.BackgroundTransparency = 0.5
+Toggle.Position = UDim2.new(0, 0, 0.454706937, 0)
+Toggle.Size = UDim2.new(0, 50, 0, 50)
+Toggle.Font = Enum.Font.SourceSans
+Toggle.Text = ""
+Toggle.TextColor3 = Color3.fromRGB(248, 248, 248)
+Toggle.TextSize = 18.000
+Toggle.Draggable = true
+
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(0.2, 0)
+Corner.Parent = Toggle
+
+local Image = Instance.new("ImageLabel")
+Image.Name = "Icon"
+Image.Parent = Toggle
+Image.Size = UDim2.new(1, 0, 1, 0)
+Image.BackgroundTransparency = 1
+Image.Image = "rbxassetid://117239677500065" 
+
+local Corner2 = Instance.new("UICorner")
+Corner2.CornerRadius = UDim.new(0.2, 0)
+Corner2.Parent = Image
+
+local guiEnabled = false
+
+Toggle.MouseButton1Click:Connect(function()
+    guiEnabled = not guiEnabled
+    Window.Enabled = guiEnabled
 end)
