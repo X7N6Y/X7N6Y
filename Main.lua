@@ -28,14 +28,10 @@ if game.PlaceId == gameId then
 	local autoReelEnabled = false
     local lastCastTime = 0
     local reelFinished = true
+    local casting = false
 
 	do
-		Fluent:Notify({
-			Title = "Notification",
-			Content = "This is a notification",
-			SubContent = "SubContent",
-			Duration = 5
-		})
+		
 
 		local AutoCastToggle = Tabs.Main:AddToggle("AutoCast", {Title = "Auto Cast", Default = false})
 		AutoCastToggle:OnChanged(function()
@@ -43,8 +39,9 @@ if game.PlaceId == gameId then
 			if autoCastEnabled then
 				task.spawn(function()
 					while autoCastEnabled do
-						local rod = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool")
-						if rod and rod:FindFirstChild("events") and rod.events:FindFirstChild("cast") then
+                        local rod = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool")
+                        if rod and rod:FindFirstChild("events") and rod.events:FindFirstChild("cast") and not casting then
+                            casting = true
 							local args = {
 								[1] = 100,
 								[2] = 1
@@ -60,9 +57,12 @@ if game.PlaceId == gameId then
                                     }
                                     game:GetService("ReplicatedStorage").events.reelfinished:FireServer(unpack(args))
                                     reelFinished = true
+                                    casting = false
                                 end
                             end)
-						end
+						else
+                            casting = false
+                        end
 						wait(0.2)
 					end
 				end)
@@ -110,10 +110,7 @@ if game.PlaceId == gameId then
 			Description = "Copy the discord link to your clipboard",
 			Callback = function()
 				setclipboard("https://discord.gg/cUujpKKdtX")
-				Fluent:Notify({
-					Title = "Discord Copied",
-					Content = "Discord link copied to clipboard!"
-				})
+				
 			end
 		})
 	end
