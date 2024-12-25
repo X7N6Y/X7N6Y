@@ -26,11 +26,8 @@ if game.PlaceId == gameId then
 
 	local autoCastEnabled = false
 	local autoReelEnabled = false
-	local autoShakeEnabled = false
-	local navigationActive = false
-    local shakeConnection
-	local lastCastTime = 0
-	local isMobile = UserInputService.TouchEnabled
+    local lastCastTime = 0
+    local reelFinished = true
 
 	do
 		Fluent:Notify({
@@ -54,6 +51,17 @@ if game.PlaceId == gameId then
 							}
 							rod.events.cast:FireServer(unpack(args))
 							lastCastTime = tick()
+                            reelFinished = false
+                            task.delay(0.7, function()
+                                if autoReelEnabled then
+                                    local args = {
+                                        [1] = 100,
+                                        [2] = true
+                                    }
+                                    game:GetService("ReplicatedStorage").events.reelfinished:FireServer(unpack(args))
+                                    reelFinished = true
+                                end
+                            end)
 						end
 						wait(0.2)
 					end
@@ -72,7 +80,18 @@ if game.PlaceId == gameId then
 						[2] = 1
 					}
 					rod.events.cast:FireServer(unpack(args))
-					lastCastTime = tick()
+                    lastCastTime = tick()
+                    reelFinished = false
+                    task.delay(0.7, function()
+                        if autoReelEnabled then
+                            local args = {
+                                [1] = 100,
+                                [2] = true
+                            }
+                            game:GetService("ReplicatedStorage").events.reelfinished:FireServer(unpack(args))
+                             reelFinished = true
+                        end
+                    end)
 				end
 			end
 		})
@@ -80,93 +99,6 @@ if game.PlaceId == gameId then
 		local AutoReelToggle = Tabs.Main:AddToggle("AutoReel", {Title = "Auto Reel", Default = false})
 		AutoReelToggle:OnChanged(function()
 			autoReelEnabled = Options.AutoReel.Value
-			if autoReelEnabled then
-				task.spawn(function()
-					while autoReelEnabled do
-						local args = {
-							[1] = 100,
-							[2] = true
-						}
-						game:GetService("ReplicatedStorage").events.reelfinished:FireServer(unpack(args))
-						wait(0.2)
-					end
-				end)
-			end
-		end)
-		
-		local AutoShakeToggle = Tabs.Main:AddToggle("AutoShake", {Title = "Auto Shake", Default = false})
-		AutoShakeToggle:OnChanged(function()
-			autoShakeEnabled = Options.AutoShake.Value
-            if autoShakeEnabled then
-                local function createShake()
-                    local camera = workspace.CurrentCamera
-                    local originalCFrame = camera.CFrame
-                    local shakeDuration = 0.1
-                    local shakeMagnitude = 0.1
-                    local shakeFrequency = 30
-                    local shakeStartTime = tick()
-                    shakeConnection = game:GetService("RunService").RenderStepped:Connect(function()
-                        local elapsedTime = tick() - shakeStartTime
-                        if elapsedTime <= shakeDuration then
-                            local offsetX = math.sin(elapsedTime * shakeFrequency * 2 * math.pi) * shakeMagnitude
-                            local offsetY = math.cos(elapsedTime * shakeFrequency * 2 * math.pi) * shakeMagnitude
-                            camera.CFrame = originalCFrame * CFrame.new(offsetX, offsetY, 0)
-                        else
-                            camera.CFrame = originalCFrame
-                            shakeConnection:Disconnect()
-                            shakeConnection = nil
-                            return
-                        end
-                    end)
-                end
-                task.spawn(function()
-                    while autoShakeEnabled do
-                        local shakeButton = nil
-                        for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetDescendants()) do
-                            if v:IsA("TextButton") and v.Text == "SHAKE" then
-                                shakeButton = v
-                                break
-                            end
-                        end
-						if shakeButton or tick() - lastCastTime < 0.5 then
-							if not navigationActive then
-								navigationActive = true
-								game:GetService("UserInputService").InputBegan:Connect(function(input, gp)
-                                   if input.KeyCode == (isMobile and Enum.KeyCode.Backquote or Enum.KeyCode.Backslash) then
-										navigationActive = not navigationActive
-										if navigationActive then
-											game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.Default
-										else
-											game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.LockCenter
-										end
-									end
-								end)
-							end
-							if navigationActive then
-								game:GetService("VirtualInputManager"):SendKeyEvent(false,Enum.KeyCode.Down,false,game)
-								wait(0.05)
-							end
-							if shakeButton then
-								game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.Default
-								game:GetService("VirtualInputManager"):SendMouseButtonEvent(shakeButton.AbsolutePosition.X + shakeButton.AbsoluteSize.X / 2, shakeButton.AbsolutePosition.Y + shakeButton.AbsoluteSize.Y / 2, 1, true, nil, false)
-								game:GetService("VirtualInputManager"):SendMouseButtonEvent(shakeButton.AbsolutePosition.X + shakeButton.AbsoluteSize.X / 2, shakeButton.AbsolutePosition.Y + shakeButton.AbsoluteSize.Y / 2, 1, false, nil, false)
-                                createShake()
-								game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.LockCenter
-							end
-						end
-                        wait(0.1)
-                    end
-                    if shakeConnection then
-                        shakeConnection:Disconnect()
-                        shakeConnection = nil
-                    end
-                end)
-            else
-                 if shakeConnection then
-                    shakeConnection:Disconnect()
-                    shakeConnection = nil
-                 end
-            end
 		end)
 		
 		Tabs.Home:AddParagraph({
