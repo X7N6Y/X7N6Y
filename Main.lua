@@ -36,82 +36,81 @@ if game.PlaceId == gameId then
 
 
 	do
-		
-        _G.AutoCast = false
+        local AutoCast = false
+        local AutoShake = false
+        local AutoReel = false
+
         task.spawn(function()
             while true do
                 task.wait()
-                if _G.AutoCast and rodEquipped then
-                    pcall(function()
-                        if currentRod then
-                            task.wait(.1)
-                            currentRod.events.cast:FireServer(100,1)
-                        end
-                    end)
+                if AutoCast and rodEquipped then
+                    if currentRod then
+                        task.wait(.1)
+                        currentRod.events.cast:FireServer(100,1)
+                    end
                 end
             end
         end)
 
 
-        _G.AutoShake = false
         task.spawn(function()
             while true do
                 task.wait()
-                if _G.AutoShake then
-                    pcall(function()
-                         task.wait(0.01)
-                        local PlayerGUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-                        local shakeUI = PlayerGUI:FindFirstChild("shakeui")
-                        if shakeUI and shakeUI.Enabled then
-                            local safezone = shakeUI:FindFirstChild("safezone")
-                            if safezone then
-                                local button = safezone:FindFirstChild("button")
-                                if button and button:IsA("ImageButton") and button.Visible then
-                                        GuiService.SelectedObject = button
-                                        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
-                                        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-                                end
+                if AutoShake then
+                  local PlayerGUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+                    local shakeUI = PlayerGUI:FindFirstChild("shakeui")
+                    if shakeUI and shakeUI.Enabled then
+                        local safezone = shakeUI:FindFirstChild("safezone")
+                        if safezone then
+                            local button = safezone:FindFirstChild("button")
+                            if button and button:IsA("ImageButton") and button.Visible then
+                                GuiService.SelectedObject = button
+                                VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+                                VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
                             end
                         end
-                    end)
+                    end
                 end
             end
         end)
         -- AutoReel
-        _G.AutoReel = false
         task.spawn(function()
             while true do
                 task.wait()
-                if _G.AutoReel then
-                    pcall(function()
-                        for i,v in pairs(LocalPlayer.PlayerGui:GetChildren()) do
-                            if v:IsA "ScreenGui" and v.Name == "reel"then
-                                if v:FindFirstChild "bar" then
-                                    task.wait(.15)
-                                        ReplicatedStorage.events.reelfinished:FireServer(100,true)
-                                end
+                if AutoReel then
+                    for i,v in pairs(LocalPlayer.PlayerGui:GetChildren()) do
+                        if v:IsA "ScreenGui" and v.Name == "reel"then
+                            if v:FindFirstChild "bar" then
+                                task.wait(.15)
+                                ReplicatedStorage.events.reelfinished:FireServer(100,true)
                             end
                         end
-                    end)
+                    end
                 end
             end
         end)
 
-        task.spawn(function()
+
+         task.spawn(function()
             while true do
                 task.wait(1)
                 currentRod = Char:FindFirstChildOfClass("Tool")
-                if currentRod and currentRod.Name:lower():find("rod") then
-                    rodEquipped = true
-                else
-                    rodEquipped = false
+                if currentRod then
+                  local rodName = currentRod.Name:lower()
+                     if rodName:find("rod") then
+                         rodEquipped = true
+                     else
+                       rodEquipped = false
+                     end
+                 else
+                   rodEquipped = false
                 end
             end
         end)
 
 		local AutoCastToggle = Tabs.Main:AddToggle("AutoCast", {Title = "Auto Cast", Default = false})
 		AutoCastToggle:OnChanged(function()
-			_G.AutoCast = Options.AutoCast.Value
+            AutoCast = Options.AutoCast.Value
 		end)
 		
 		Tabs.Main:AddButton({
@@ -126,12 +125,12 @@ if game.PlaceId == gameId then
 
 		local AutoReelToggle = Tabs.Main:AddToggle("AutoReel", {Title = "Auto Reel", Default = false})
 		AutoReelToggle:OnChanged(function()
-			_G.AutoReel = Options.AutoReel.Value
+            AutoReel = Options.AutoReel.Value
 		end)
         
         local AutoShakeToggle = Tabs.Main:AddToggle("AutoShake", {Title = "Auto Shake", Default = false})
         AutoShakeToggle:OnChanged(function()
-            _G.AutoShake = Options.AutoShake.Value
+            AutoShake = Options.AutoShake.Value
         end)
 		
 		Tabs.Home:AddParagraph({
@@ -143,7 +142,6 @@ if game.PlaceId == gameId then
 			Description = "Copy the discord link to your clipboard",
 			Callback = function()
 				setclipboard("https://discord.gg/cUujpKKdtX")
-				
 			end
 		})
 	end
