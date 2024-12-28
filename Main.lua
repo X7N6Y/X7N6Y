@@ -19,7 +19,7 @@ if game.PlaceId == gameId then
 	local Tabs = {
 		Home = Window:AddTab({Title = "Home", Icon = "home"}),
 		Main = Window:AddTab({ Title = "Main", Icon = "menu" }),
-		Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
+		Misc = Window:AddTab({ Title = "Misc", Icon = "settings" }),
 	}
 
 	local Options = Fluent.Options
@@ -137,7 +137,7 @@ if game.PlaceId == gameId then
 
         local clientFolder = workspace:WaitForChild("X7N6Y"):WaitForChild("client")
         if clientFolder then
-            local disableOxygenToggle = Tabs.Settings:AddToggle("disableOxygen", {Title = "disable oxygen", Default = false})
+            local disableOxygenToggle = Tabs.Misc:AddToggle("disableOxygen", {Title = "disable oxygen", Default = false})
             disableOxygenToggle:OnChanged(function()
                 local oxygenScript = clientFolder:FindFirstChild("oxygen")
                 if oxygenScript and oxygenScript:IsA("LocalScript") then
@@ -147,7 +147,7 @@ if game.PlaceId == gameId then
                     end
                 end
             end)
-            local disableOxygenPeaksToggle = Tabs.Settings:AddToggle("disableOxygen(peaks)", {Title = "disable oxygen(peaks)", Default = false})
+            local disableOxygenPeaksToggle = Tabs.Misc:AddToggle("disableOxygen(peaks)", {Title = "disable oxygen(peaks)", Default = false})
             disableOxygenPeaksToggle:OnChanged(function()
                  local oxygenPeaksScript = clientFolder:FindFirstChild("oxygen(peaks)")
                 if oxygenPeaksScript and oxygenPeaksScript:IsA("LocalScript") then
@@ -157,7 +157,7 @@ if game.PlaceId == gameId then
                      end
                 end
             end)
-            local disableTemperatureToggle = Tabs.Settings:AddToggle("disableTemperature", {Title = "disable temperature", Default = false})
+            local disableTemperatureToggle = Tabs.Misc:AddToggle("disableTemperature", {Title = "disable temperature", Default = false})
             disableTemperatureToggle:OnChanged(function()
                 local temperatureScript = clientFolder:FindFirstChild("temperature")
                 if temperatureScript and temperatureScript:IsA("LocalScript") then
@@ -191,8 +191,8 @@ if game.PlaceId == gameId then
 	InterfaceManager:SetFolder("FluentScriptHub")
 	SaveManager:SetFolder("FluentScriptHub/specific-game")
 
-	InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-	SaveManager:BuildConfigSection(Tabs.Settings)
+	InterfaceManager:BuildInterfaceSection(Tabs.Misc)
+	SaveManager:BuildConfigSection(Tabs.Misc)
 
 	Window:SelectTab(1)
 
