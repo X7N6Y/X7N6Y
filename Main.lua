@@ -7,8 +7,8 @@ local gameId = 16732694052
 if game.PlaceId == gameId then
 
 	local Window = Fluent:CreateWindow({
-		Title = "Fluent " .. Fluent.Version,
-		SubTitle = "by dawid",
+		Title = "Fisch",
+		SubTitle = "By Azure",
 		TabWidth = 160,
 		Size = UDim2.fromOffset(580, 460),
 		Acrylic = true,
@@ -33,29 +33,20 @@ if game.PlaceId == gameId then
     local GuiService = game:GetService("GuiService")
     local currentRod = nil
     local rodEquipped = false
-    local isShaking = false
-    local isReeling = false
-    local canAutoCast = true
 
 
 	do
 		
         _G.AutoCast = false
         task.spawn(function()
-            while true do
-                task.wait()
-                if _G.AutoCast and rodEquipped and canAutoCast then
-                    pcall(function()
-                        if currentRod then
-                            local args = {
-                                [1] = 100,
-                                [2] = 1
-                            }
-                            task.wait(.1)
-                            currentRod.events.cast:FireServer(unpack(args))
-                            canAutoCast = false
-                        end
-                    end)
+            while wait() do
+                if _G.AutoCast and rodEquipped and LocalPlayer.Character:FindFirstChildOfClass('Tool') and LocalPlayer.Character:FindFirstChildOfClass('Tool'):FindFirstChild("values") and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted.Value == false then
+                    local args = {
+                        [1] = 100
+                    }
+                    
+                    LocalPlayer.Character:FindFirstChildOfClass('Tool').events.cast:FireServer(unpack(args))
+                    wait(2)
                 end
             end
         end)
@@ -67,23 +58,13 @@ if game.PlaceId == gameId then
                 task.wait()
                 if _G.AutoShake then
                     pcall(function()
-                        isShaking = true
-                         task.wait(0.1)
-                        local PlayerGUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-                        local shakeUI = PlayerGUI:FindFirstChild("shakeui")
-                        if shakeUI and shakeUI.Enabled then
-                            local safezone = shakeUI:FindFirstChild("safezone")
-                            if safezone then
-                                local button = safezone:FindFirstChild("button")
-                                if button and button:IsA("ImageButton") and button.Visible then
-                                        GuiService.SelectedObject = button
-                                        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
-                                        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-                                end
+                        if LocalPlayer.Character:FindFirstChildOfClass('Tool') and LocalPlayer.Character:FindFirstChildOfClass('Tool'):FindFirstChild("values") and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted.Value == true then
+                            GuiService.SelectedObject = LocalPlayer.PlayerGui.shakeui.safezone.button
+                            if GuiService.SelectedObject == LocalPlayer.PlayerGui.shakeui.safezone.button then
+                                VirtualInputManager:SendKeyEvent(true, 13, false, LocalPlayer.Character.HumanoidRootPart)
+                                VirtualInputManager:SendKeyEvent(false, 13, false, LocalPlayer.Character.HumanoidRootPart)
                             end
                         end
-                         isShaking = false
-                          canAutoCast = true
                     end)
                 end
             end
@@ -95,7 +76,6 @@ if game.PlaceId == gameId then
                 task.wait()
                 if _G.AutoReel then
                     pcall(function()
-                        isReeling = true
                         for i,v in pairs(LocalPlayer.PlayerGui:GetChildren()) do
                             if v:IsA "ScreenGui" and v.Name == "reel"then
                                 if v:FindFirstChild "bar" then
@@ -104,8 +84,6 @@ if game.PlaceId == gameId then
                                 end
                             end
                         end
-                        isReeling = false
-                          canAutoCast = true
                     end)
                 end
             end
