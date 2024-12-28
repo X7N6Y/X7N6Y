@@ -25,11 +25,11 @@ This is a fisch script.
 
 ## How to Use
 
-1.  **Load the Script:** loadstring(game:HttpGet("https://raw.githubusercontent.com/X7N6Y/X7N6Y/main/Main.lua"))()
-2.  **Access the Menu:** The Fluent UI window will appear on your screen.
-3.  **Navigate Tabs:** Use the tabs to switch between the different feature sections.
-4.  **Toggle Features:** Enable or disable features using the toggle buttons in the Main and Settings tabs.
-5.  **Use Buttons:** Activate instant actions such as the Perfect Cast using the provided buttons.
+1.  **Load the Script:** '''loadstring(game:HttpGet("https://raw.githubusercontent.com/X7N6Y/X7N6Y/main/Main.lua"))()'''
+3.  **Access the Menu:** The Fluent UI window will appear on your screen.
+4.  **Navigate Tabs:** Use the tabs to switch between the different feature sections.
+5.  **Toggle Features:** Enable or disable features using the toggle buttons in the Main and Settings tabs.
+6.  **Use Buttons:** Activate instant actions such as the Perfect Cast using the provided buttons.
 
 ## Notes
 
