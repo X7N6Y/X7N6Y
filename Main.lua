@@ -33,6 +33,9 @@ if game.PlaceId == gameId then
     local GuiService = game:GetService("GuiService")
     local currentRod = nil
     local rodEquipped = false
+    local isShaking = false
+    local isReeling = false
+    local canAutoCast = true
 
 
 	do
@@ -41,7 +44,7 @@ if game.PlaceId == gameId then
         task.spawn(function()
             while true do
                 task.wait()
-                if _G.AutoCast and rodEquipped then
+                if _G.AutoCast and rodEquipped and canAutoCast then
                     pcall(function()
                         if currentRod then
                             local args = {
@@ -50,6 +53,7 @@ if game.PlaceId == gameId then
                             }
                             task.wait(.1)
                             currentRod.events.cast:FireServer(unpack(args))
+                            canAutoCast = false
                         end
                     end)
                 end
@@ -63,7 +67,8 @@ if game.PlaceId == gameId then
                 task.wait()
                 if _G.AutoShake then
                     pcall(function()
-                         task.wait(0.01)
+                        isShaking = true
+                         task.wait(0.1)
                         local PlayerGUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
                         local shakeUI = PlayerGUI:FindFirstChild("shakeui")
                         if shakeUI and shakeUI.Enabled then
@@ -77,6 +82,8 @@ if game.PlaceId == gameId then
                                 end
                             end
                         end
+                         isShaking = false
+                          canAutoCast = true
                     end)
                 end
             end
@@ -88,6 +95,7 @@ if game.PlaceId == gameId then
                 task.wait()
                 if _G.AutoReel then
                     pcall(function()
+                        isReeling = true
                         for i,v in pairs(LocalPlayer.PlayerGui:GetChildren()) do
                             if v:IsA "ScreenGui" and v.Name == "reel"then
                                 if v:FindFirstChild "bar" then
@@ -96,6 +104,8 @@ if game.PlaceId == gameId then
                                 end
                             end
                         end
+                        isReeling = false
+                          canAutoCast = true
                     end)
                 end
             end
