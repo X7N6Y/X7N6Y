@@ -55,7 +55,7 @@ if game.PlaceId == gameId then
         _G.AutoShake = false
         task.spawn(function()
             while true do
-                task.wait()
+                task.wait(.01)
                 if _G.AutoShake then
                     pcall(function()
                         if LocalPlayer.Character:FindFirstChildOfClass('Tool') and LocalPlayer.Character:FindFirstChildOfClass('Tool'):FindFirstChild("values") and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted.Value == true then
@@ -89,27 +89,7 @@ if game.PlaceId == gameId then
             end
         end)
 
-        _G.AutoDropBobber = false
-        task.spawn(function()
-            while true do
-                task.wait()
-                if _G.AutoDropBobber then
-                    pcall(function()
-                        local bobberFrame = game:GetService("StarterGui").hud.safezone.skins.bobbers.scroll.safezone.bobber
-                        if bobberFrame and bobberFrame.Visible then
-                             for _, button in pairs(bobberFrame:GetChildren()) do
-                                if button:IsA("ImageButton") then
-                                    GuiService.SelectedObject = button
-                                    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
-                                    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-                                    task.wait(.1)
-                                end
-                             end
-                        end
-                    end)
-                end
-            end
-        end)
+        
 
         task.spawn(function()
             while true do
@@ -152,10 +132,7 @@ if game.PlaceId == gameId then
             _G.AutoShake = Options.AutoShake.Value
         end)
 		
-        local AutoDropBobberToggle = Tabs.Main:AddToggle("AutoDropBobber", {Title = "Auto Drop Bobber", Default = false})
-		AutoDropBobberToggle:OnChanged(function()
-			_G.AutoDropBobber = Options.AutoDropBobber.Value
-		end)
+
 
 
         local clientFolder = workspace:WaitForChild("X7N6Y"):WaitForChild("client")
@@ -224,6 +201,38 @@ if game.PlaceId == gameId then
 		Content = "The script has been loaded.",
 		Duration = 8
 	})
+    local CoreGui = game:GetService("CoreGui"):FindFirstChild("RobloxGui")
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "CustomScreenGui"
+    ScreenGui.Parent = CoreGui
+    local CloseOpen = Instance.new("TextButton")
+    CloseOpen.Name = "CloseOpenButton"
+    CloseOpen.Text = ""
+    CloseOpen.Parent = ScreenGui
+    CloseOpen.Size = UDim2.new(0, 30, 0, 30)
+    CloseOpen.Position = UDim2.new(0.95, -30, 0.5, -15)
+	CloseOpen.AnchorPoint = Vector2.new(1,0.5)
+    CloseOpen.BackgroundColor3 = Color3.fromRGB(255, 164, 164)
+    CloseOpen.BackgroundTransparency = 0
+    CloseOpen.BorderSizePixel = 0
+    CloseOpen.Text = ""
+    local UICorner = Instance.new("UICorner")
+    UICorner.CornerRadius = UDim.new(1, 0)
+    UICorner.Parent = CloseOpen
+    local function CloseOpenFunc()
+        for i,v in pairs(game:GetService("CoreGui"):FindFirstChild("ScreenGui"):GetChildren()) do
+            if v.Name == "Frame" and v:FindFirstChild("TextLabel") then
+                if v.Visible then
+                    v.Visible = false
+                    game:GetService("CoreGui"):FindFirstChild("ScreenGui").Enabled = false
+                else
+                    v.Visible = true
+                    game:GetService("CoreGui"):FindFirstChild("ScreenGui").Enabled = true
+                end
+            end
+        end
+    end
+    CloseOpen.Activated:Connect(CloseOpenFunc)
 
 	SaveManager:LoadAutoloadConfig()
 else
