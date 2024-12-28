@@ -1,3 +1,7 @@
+## Credits
+
+-   Created by Azure
+
 # Script for fisch
 
 This is a fisch script.
