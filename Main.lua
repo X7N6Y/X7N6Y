@@ -7,7 +7,7 @@ local gameId = 16732694052
 if game.PlaceId == gameId then
 
 	local Window = Fluent:CreateWindow({
-		Title = "[UPD] Fisch",
+		Title = "Fisch",
 		SubTitle = "By Azure",
 		TabWidth = 160,
 		Size = UDim2.fromOffset(580, 460),
@@ -19,6 +19,7 @@ if game.PlaceId == gameId then
 	local Tabs = {
 		Home = Window:AddTab({Title = "Home", Icon = "home"}),
 		Main = Window:AddTab({ Title = "Main", Icon = "menu" }),
+        Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
 		Misc = Window:AddTab({ Title = "Misc", Icon = "settings" }),
 	}
 
@@ -168,6 +169,19 @@ if game.PlaceId == gameId then
                 end
             end)
         end
+		Tabs.Settings:AddButton({
+			Title = "Get Current Outfit",
+			Description = "Copy your avatar model.",
+			Callback = function()
+                local character = LocalPlayer.Character
+                if character then
+                    local copy = character:Clone()
+					copy.Parent = workspace
+					setclipboard(game:GetService("HttpService"):JSONEncode(copy:GetDescendants()))
+					copy:Destroy()
+				end
+			end
+		})
 
 		Tabs.Home:AddParagraph({
 			Title = "Credit",
@@ -191,8 +205,10 @@ if game.PlaceId == gameId then
 	InterfaceManager:SetFolder("FluentScriptHub")
 	SaveManager:SetFolder("FluentScriptHub/specific-game")
 
-	InterfaceManager:BuildInterfaceSection(Tabs.Misc)
-	SaveManager:BuildConfigSection(Tabs.Misc)
+	InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+    InterfaceManager:BuildInterfaceSection(Tabs.Misc)
+	SaveManager:BuildConfigSection(Tabs.Settings)
+    SaveManager:BuildConfigSection(Tabs.Misc)
 
 	Window:SelectTab(1)
 
