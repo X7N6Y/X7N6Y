@@ -1,169 +1,86 @@
-local _0x19cb = {
-    ["tostring"] = tostring,
-    ["char"] = string.char,
-    ["sub"] = string.sub,
-    ["byte"] = string.byte,
-    ["format"] = string.format,
-    ["find"] = string.find,
-    ["upper"] = string.upper,
-    ["rep"] = string.rep,
-    ["len"] = string.len,
-    ["gsub"] = string.gsub,
-    ["lower"] = string.lower,
-    ["concat"] = table.concat,
-    ["insert"] = table.insert,
-    ["unpack"] = unpack,
-    ["pcall"] = pcall,
-    ["wait"] = wait,
-    ["spawn"] = task.spawn,
-    ["findfirstchildofclass"] = function(a, b)
-        if not a then
-            return
-        end
-        for _, v in ipairs(a:GetChildren()) do
-            if v:IsA(b) then
-                return v
-            end
-        end
-        return nil
-    end,
-    ["isfirstchildofclass"] = function(a, b)
-        if not a then
-            return false
-        end
-        for _, v in ipairs(a:GetChildren()) do
-            if v:IsA(b) then
-                return true
-            end
-        end
-        return false
-    end
-}
-local _0x7979 = function(_0x438d)
-    local _0x5263 = ""
-    local _0x5412 = {}
-    local _0x5a61 = {}
-    for _0x2582 = 1, #_0x438d, 1 do
-        local _0x3e6f = _0x19cb.byte(_0x438d, _0x2582)
-        _0x19cb.insert(_0x5412, _0x3e6f)
-    end
-    local _0x7e34 = 1
-    while true do
-        if _0x7e34 > #_0x5412 then
-            break
-        end
-        local _0x522c = _0x5412[_0x7e34]
-        if _0x522c == 0 then
-            _0x7e34 = _0x7e34 + 1
-        elseif _0x522c == 1 then
-            local _0x5d4f = _0x5412[_0x7e34 + 1]
-            _0x5263 = _0x5263 .. _0x19cb.char(_0x5d4f)
-            _0x7e34 = _0x7e34 + 2
-        elseif _0x522c == 2 then
-            local _0x7f91 = _0x5412[_0x7e34 + 1]
-            local _0x5e91 = _0x5412[_0x7e34 + 2]
-            _0x5263 = _0x5263 .. _0x19cb.char((_0x7f91 * 256 + _0x5e91) % 256)
-            _0x7e34 = _0x7e34 + 3
-        elseif _0x522c == 3 then
-            local _0x6880 = _0x5412[_0x7e34 + 1]
-            local _0x7e17 = _0x5412[_0x7e34 + 2]
-            local _0x7466 = _0x5412[_0x7e34 + 3]
-            _0x5263 = _0x5263 .. _0x19cb.char((_0x6880 * 65536 + _0x7e17 * 256 + _0x7466) % 256)
-            _0x7e34 = _0x7e34 + 4
-        elseif _0x522c == 4 then
-            local _0x40af = _0x5412[_0x7e34 + 1]
-            local _0x4950 = _0x5412[_0x7e34 + 2]
-            local _0x76e3 = _0x5412[_0x7e34 + 3]
-            local _0x2b1f = _0x5412[_0x7e34 + 4]
-            _0x5263 = _0x5263 .. _0x19cb.char((_0x40af * 16777216 + _0x4950 * 65536 + _0x76e3 * 256 + _0x2b1f) % 256)
-            _0x7e34 = _0x7e34 + 5
-        end
-    end
-    return _0x5263
-end
-local _0x486d = _0x7979("\1\108\1\111\1\97\1\100\1\115\1\116\1\114\1\105\1\110\1\103\2\19\162\1\103\1\101\1\116\1\84\1\116\1\112\2\17\130\2\19\162\1\114\1\97\1\119\2\17\130\2\16\122\1\109\1\97\1\115\1\116\1\101\1\114\2\19\162\2\19\162\1\65\1\100\1\100\1\111\1\110\1\115\1\47\1\83\1\97\1\118\1\101\1\77\1\97\1\110\1\97\1\103\1\101\1\114\2\19\162\2\19\162\1\65\1\100\1\100\1\111\1\110\1\115\1\47\1\73\1\110\1\116\1\101\1\114\1\102\1\97\1\99\1\101\1\77\1\97\1\110\1\97\1\103\1\101\1\114")
-local _0x3401 = loadstring(_0x19cb.concat({
-    game:HttpGet(_0x7979("\1\104\1\116\1\116\1\112\1\115\2\17\130\1\47\1\47\1\103\1\105\1\116\1\104\1\117\1\98\1\46\1\99\1\111\1\109\1\47\1\100\1\97\1\119\1\105\1\100\1\45\1\115\1\99\1\114\1\105\1\112\1\116\1\115\1\47\1\70\1\108\1\117\1\101\1\110\1\116\1\47\1\114\1\101\1\108\1\101\1\97\1\115\1\101\1\115\1\47\1\108\1\97\1\116\1\101\1\115\1\116\1\47\1\100\1\111\1\119\1\110\1\108\1\111\1\97\1\100\1\47\1\109\1\97\1\105\1\110\1\46\1\108\1\117\1\97"))),
-    _0x19cb.char(40, 41)
-}))()
-local _0x1d46 = loadstring(game:HttpGet(_0x7979("\1\104\1\116\1\116\1\112\1\115\2\17\130\1\47\1\47\1\114\1\97\1\119\1\46\1\103\1\105\1\116\1\104\1\117\1\98\1\117\1\115\1\101\1\114\1\99\1\111\1\110\1\116\1\101\1\110\1\116\1\46\1\99\1\111\1\109\1\47\1\100\1\97\1\119\1\105\1\100\1\45\1\115\1\99\1\114\1\105\1\112\1\116\1\115\1\47\1\70\1\108\1\117\1\101\1\110\1\116\1\47\1\109\1\97\1\115\1\116\1\101\1\114\1\47\1\65\1\100\1\100\1\111\1\110\1\115\1\47\1\83\1\97\1\118\1\101\1\77\1\97\1\110\1\97\1\103\1\101\1\114\1\46\1\108\1\117\1\97"))))()
-local _0x781c = loadstring(game:HttpGet(_0x7979("\1\104\1\116\1\116\1\112\1\115\2\17\130\1\47\1\47\1\114\1\97\1\119\1\46\1\103\1\105\1\116\1\104\1\117\1\98\1\117\1\115\1\101\1\114\1\99\1\111\1\110\1\116\1\101\1\110\1\116\1\46\1\99\1\111\1\109\1\47\1\100\1\97\1\119\1\105\1\100\1\45\1\115\1\99\1\114\1\105\1\112\1\116\1\115\1\47\1\70\1\108\1\117\1\101\1\110\1\116\1\47\1\109\1\97\1\115\1\116\1\101\1\114\1\47\1\65\1\100\1\100\1\111\1\110\1\115\1\47\1\73\1\110\1\116\1\101\1\114\1\102\1\97\1\99\1\101\1\77\1\97\1\110\1\97\1\103\1\101\1\114\1\46\1\108\1\117\1\97"))))()
-local _0x151e = 16732694052
-if game.PlaceId == _0x151e then
-    local _0x4752 = _0x3401:CreateWindow({
-        ["Title"] = _0x7979("\1\70\1\105\1\115\1\99\1\104"),
-        ["SubTitle"] = _0x7979("\1\66\1\121\1\32\1\65\1\122\1\117\1\114\1\101"),
-        ["TabWidth"] = 160,
-        ["Size"] = UDim2.fromOffset(580, 460),
-        ["Acrylic"] = true,
-        ["Theme"] = _0x7979("\1\68\1\97\1\114\1\107"),
-        ["MinimizeKey"] = Enum.KeyCode.LeftControl
-    })
-    local _0x1c48 = {
-        ["Home"] = _0x4752:AddTab({
-            ["Title"] = _0x7979("\1\72\1\111\1\109\1\101"),
-            ["Icon"] = _0x7979("\1\104\1\111\1\109\1\101")
-        }),
-        ["Main"] = _0x4752:AddTab({
-            ["Title"] = _0x7979("\1\77\1\97\1\105\1\110"),
-            ["Icon"] = _0x7979("\1\109\1\101\1\110\1\117")
-        }),
-        ["Settings"] = _0x4752:AddTab({
-            ["Title"] = _0x7979("\1\83\1\101\1\116\1\116\1\105\1\110\1\103\1\115"),
-            ["Icon"] = _0x7979("\1\115\1\101\1\116\1\116\1\105\1\110\1\103\1\115")
-        })
-    }
-    local _0x6b70 = _0x3401.Options
-    local _0x6d8d = game:GetService(_0x7979("\1\80\1\108\1\97\1\121\1\101\1\114\1\115"))
-    local _0x34c9 = _0x6d8d.LocalPlayer
-    local _0x2905 = _0x34c9.Character
-    local _0x73e2 = _0x2905.Humanoid
-    local _0x7347 = game:GetService(_0x7979("\1\86\1\105\1\114\1\116\1\117\1\97\1\108\1\73\1\110\1\112\1\117\1\116\1\77\1\97\1\110\1\97\1\103\1\101\1\114"))
-    local _0x43e1 = game:GetService(_0x7979("\1\82\1\101\1\112\1\108\1\105\1\99\1\97\1\116\1\101\1\100\1\83\1\116\1\111\1\114\1\97\1\103\1\101"))
-    local _0x1902 = game:GetService(_0x7979("\1\71\1\117\1\105\1\83\1\101\1\114\1\118\1\105\1\99\1\101"))
-    local _0x57af = nil
-    local _0x1c9c = false
-    do
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local gameId = 16732694052
+
+if game.PlaceId == gameId then
+
+	local Window = Fluent:CreateWindow({
+		Title = "Fisch",
+		SubTitle = "By Azure",
+		TabWidth = 160,
+		Size = UDim2.fromOffset(580, 460),
+		Acrylic = true,
+		Theme = "Dark",
+		MinimizeKey = Enum.KeyCode.LeftControl
+	})
+
+	local Tabs = {
+		Home = Window:AddTab({Title = "Home", Icon = "home"}),
+		Main = Window:AddTab({ Title = "Main", Icon = "menu" }),
+		Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
+	}
+
+	local Options = Fluent.Options
+
+    local Player = game:GetService("Players")
+    local LocalPlayer = Player.LocalPlayer
+    local Char = LocalPlayer.Character
+    local Humanoid = Char.Humanoid
+    local VirtualInputManager = game:GetService("VirtualInputManager")
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local GuiService = game:GetService("GuiService")
+    local currentRod = nil
+    local rodEquipped = false
+
+
+	do
+		
         _G.AutoCast = false
-        _0x19cb.spawn(function()
-            while _0x19cb.wait() do
-                if _G.AutoCast and _0x1c9c and _0x34c9.Character:_0x19cb.findfirstchildofclass(_0x7979("\1\84\1\111\1\111\1\108")) and _0x34c9.Character:_0x19cb.findfirstchildofclass(_0x7979("\1\84\1\111\1\111\1\108")):FindFirstChild(_0x7979("\1\118\1\97\1\108\1\117\1\101\1\115")) and _0x34c9.Character:_0x19cb.findfirstchildofclass(_0x7979("\1\84\1\111\1\111\1\108")).values.casted and _0x34c9.Character:_0x19cb.findfirstchildofclass(_0x7979("\1\84\1\111\1\111\1\108")).values.casted.Value == false then
-                    local _0x378c = {
+        task.spawn(function()
+            while wait() do
+                if _G.AutoCast and rodEquipped and LocalPlayer.Character:FindFirstChildOfClass('Tool') and LocalPlayer.Character:FindFirstChildOfClass('Tool'):FindFirstChild("values") and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted.Value == false then
+                    local args = {
                         [1] = 100
                     }
-                    _0x34c9.Character:_0x19cb.findfirstchildofclass(_0x7979("\1\84\1\111\1\111\1\108")).events.cast:FireServer(_0x19cb.unpack(_0x378c))
-                    _0x19cb.wait(2)
+                    
+                    LocalPlayer.Character:FindFirstChildOfClass('Tool').events.cast:FireServer(unpack(args))
+                    wait(2)
                 end
             end
         end)
+
+
         _G.AutoShake = false
-        _0x19cb.spawn(function()
+        task.spawn(function()
             while true do
-                _0x19cb.wait(0.01)
+                task.wait(.01)
                 if _G.AutoShake then
-                    _0x19cb.pcall(function()
-                        if _0x34c9.Character:_0x19cb.findfirstchildofclass(_0x7979("\1\84\1\111\1\111\1\108")) and _0x34c9.Character:_0x19cb.findfirstchildofclass(_0x7979("\1\84\1\111\1\111\1\108")):FindFirstChild(_0x7979("\1\118\1\97\1\108\1\117\1\101\1\115")) and _0x34c9.Character:_0x19cb.findfirstchildofclass(_0x7979("\1\84\1\111\1\111\1\108")).values.casted and _0x34c9.Character:_0x19cb.findfirstchildofclass(_0x7979("\1\84\1\111\1\111\1\108")).values.casted.Value == true then
-                            _0x1902.SelectedObject = _0x34c9.PlayerGui.shakeui.safezone.button
-                            if _0x1902.SelectedObject == _0x34c9.PlayerGui.shakeui.safezone.button then
-                                _0x7347:SendKeyEvent(true, 13, false, _0x34c9.Character.HumanoidRootPart)
-                                _0x7347:SendKeyEvent(false, 13, false, _0x34c9.Character.HumanoidRootPart)
+                    pcall(function()
+                        if LocalPlayer.Character:FindFirstChildOfClass('Tool') and LocalPlayer.Character:FindFirstChildOfClass('Tool'):FindFirstChild("values") and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted.Value == true then
+                            GuiService.SelectedObject = LocalPlayer.PlayerGui.shakeui.safezone.button
+                            if GuiService.SelectedObject == LocalPlayer.PlayerGui.shakeui.safezone.button then
+                                VirtualInputManager:SendKeyEvent(true, 13, false, LocalPlayer.Character.HumanoidRootPart)
+                                VirtualInputManager:SendKeyEvent(false, 13, false, LocalPlayer.Character.HumanoidRootPart)
                             end
                         end
                     end)
                 end
             end
         end)
+        -- AutoReel
         _G.AutoReel = false
-        _0x19cb.spawn(function()
+        task.spawn(function()
             while true do
-                _0x19cb.wait()
+                task.wait()
                 if _G.AutoReel then
-                    _0x19cb.pcall(function()
-                        for _0x4a47, _0x6f6c in _0x19cb.pairs(_0x34c9.PlayerGui:GetChildren()) do
-                            if _0x6f6c:IsA(_0x7979("\1\83\1\99\1\114\1\101\1\101\1\110\1\71\1\117\1\105")) and _0x6f6c.Name == _0x7979("\1\114\1\101\1\101\1\108") then
-                                if _0x6f6c:FindFirstChild(_0x7979("\1\98\1\97\1\114")) then
-                                    _0x19cb.wait(0.15)
-                                    _0x43e1.events.reelfinished:FireServer(100, true)
+                    pcall(function()
+                        for i,v in pairs(LocalPlayer.PlayerGui:GetChildren()) do
+                            if v:IsA "ScreenGui" and v.Name == "reel"then
+                                if v:FindFirstChild "bar" then
+                                    task.wait(.15)
+                                        ReplicatedStorage.events.reelfinished:FireServer(100,true)
                                 end
                             end
                         end
@@ -171,77 +88,153 @@ if game.PlaceId == _0x151e then
                 end
             end
         end)
-        _0x19cb.spawn(function()
+
+        
+
+        task.spawn(function()
             while true do
-                _0x19cb.wait(1)
-                _0x57af = _0x2905:_0x19cb.findfirstchildofclass(_0x7979("\1\84\1\111\1\111\1\108"))
-                if _0x57af and _0x57af.Name:_0x19cb.lower():_0x19cb.find(_0x7979("\1\114\1\111\1\100")) then
-                    _0x1c9c = true
+                task.wait(1)
+                currentRod = Char:FindFirstChildOfClass("Tool")
+                if currentRod and currentRod.Name:lower():find("rod") then
+                    rodEquipped = true
                 else
-                    _0x1c9c = false
+                    rodEquipped = false
                 end
             end
         end)
-        local _0x3768 = _0x1c48.Main:AddToggle(_0x7979("\1\65\1\117\1\116\1\111\1\67\1\97\1\115\1\116"), {
-            ["Title"] = _0x7979("\1\65\1\117\1\116\1\111\1\32\1\67\1\97\1\115\1\116"),
-            ["Default"] = false
-        })
-        _0x3768:OnChanged(function()
-            _G.AutoCast = _0x6b70.AutoCast.Value
-        end)
-        _0x1c48.Main:AddButton({
-            ["Title"] = _0x7979("\1\80\1\101\1\114\1\102\1\101\1\99\1\116\1\32\1\67\1\97\1\115\1\116"),
-            ["Description"] = _0x7979("\1\67\1\97\1\115\1\116\1\32\1\121\1\111\1\117\1\114\1\32\1\114\1\111\1\100"),
-            ["Callback"] = function()
-                if _0x57af then
-                    local _0x6329 = {
+
+		local AutoCastToggle = Tabs.Main:AddToggle("AutoCast", {Title = "Auto Cast", Default = false})
+		AutoCastToggle:OnChanged(function()
+			_G.AutoCast = Options.AutoCast.Value
+		end)
+		
+		Tabs.Main:AddButton({
+			Title = "Perfect Cast",
+			Description = "Cast your rod",
+			Callback = function()
+                if currentRod then
+					local args = {
                         [1] = 100,
                         [2] = 1
                     }
-                    _0x57af.events.cast:FireServer(_0x19cb.unpack(_0x6329))
+					currentRod.events.cast:FireServer(unpack(args))
+				end
+			end
+		})
+
+		local AutoReelToggle = Tabs.Main:AddToggle("AutoReel", {Title = "Auto Reel", Default = false})
+		AutoReelToggle:OnChanged(function()
+			_G.AutoReel = Options.AutoReel.Value
+		end)
+        
+        local AutoShakeToggle = Tabs.Main:AddToggle("AutoShake", {Title = "Auto Shake", Default = false})
+        AutoShakeToggle:OnChanged(function()
+            _G.AutoShake = Options.AutoShake.Value
+        end)
+		
+
+
+
+        local clientFolder = workspace:WaitForChild("X7N6Y"):WaitForChild("client")
+        if clientFolder then
+            local disableOxygenToggle = Tabs.Settings:AddToggle("disableOxygen", {Title = "disable oxygen", Default = false})
+            disableOxygenToggle:OnChanged(function()
+                local oxygenScript = clientFolder:FindFirstChild("oxygen")
+                if oxygenScript and oxygenScript:IsA("LocalScript") then
+                    oxygenScript.Disabled = Options.disableOxygen.Value
+                     if  Options.disableOxygen.Value and oxygenScript:FindFirstChild("Value") then
+                         oxygenScript.Value.Value = false
+                    end
+                end
+            end)
+            local disableOxygenPeaksToggle = Tabs.Settings:AddToggle("disableOxygen(peaks)", {Title = "disable oxygen(peaks)", Default = false})
+            disableOxygenPeaksToggle:OnChanged(function()
+                 local oxygenPeaksScript = clientFolder:FindFirstChild("oxygen(peaks)")
+                if oxygenPeaksScript and oxygenPeaksScript:IsA("LocalScript") then
+                     oxygenPeaksScript.Disabled = Options["disableOxygen(peaks)"].Value
+                     if Options["disableOxygen(peaks)"].Value and oxygenPeaksScript:FindFirstChild("Value")  then
+                         oxygenPeaksScript.Value.Value = false
+                     end
+                end
+            end)
+            local disableTemperatureToggle = Tabs.Settings:AddToggle("disableTemperature", {Title = "disable temperature", Default = false})
+            disableTemperatureToggle:OnChanged(function()
+                local temperatureScript = clientFolder:FindFirstChild("temperature")
+                if temperatureScript and temperatureScript:IsA("LocalScript") then
+                    temperatureScript.Disabled = Options.disableTemperature.Value
+                    if Options.disableTemperature.Value and temperatureScript:FindFirstChild("Value") then
+                        temperatureScript.Value.Value = false
+                   end
+                end
+            end)
+        end
+
+		Tabs.Home:AddParagraph({
+			Title = "Credit",
+			Content = "Made by Azure"
+		})
+		Tabs.Home:AddButton({
+			Title = "Discord (Copy)",
+			Description = "Copy the discord link to your clipboard",
+			Callback = function()
+				setclipboard("https://discord.gg/cUujpKKdtX")
+				
+			end
+		})
+	end
+
+	SaveManager:SetLibrary(Fluent)
+	InterfaceManager:SetLibrary(Fluent)
+
+	SaveManager:IgnoreThemeSettings()
+	SaveManager:SetIgnoreIndexes({})
+	InterfaceManager:SetFolder("FluentScriptHub")
+	SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+	InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+	SaveManager:BuildConfigSection(Tabs.Settings)
+
+	Window:SelectTab(1)
+
+	Fluent:Notify({
+		Title = "Fluent",
+		Content = "The script has been loaded.",
+		Duration = 8
+	})
+    local CoreGui = game:GetService("CoreGui"):FindFirstChild("RobloxGui")
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "CustomScreenGui"
+    ScreenGui.Parent = CoreGui
+    local CloseOpen = Instance.new("TextButton")
+    CloseOpen.Name = "CloseOpenButton"
+    CloseOpen.Text = ""
+    CloseOpen.Parent = ScreenGui
+    CloseOpen.Size = UDim2.new(0, 30, 0, 30)
+    CloseOpen.Position = UDim2.new(0.95, -30, 0.5, -15)
+	CloseOpen.AnchorPoint = Vector2.new(1,0.5)
+    CloseOpen.BackgroundColor3 = Color3.fromRGB(255, 164, 164)
+    CloseOpen.BackgroundTransparency = 0
+    CloseOpen.BorderSizePixel = 0
+    CloseOpen.Text = ""
+    local UICorner = Instance.new("UICorner")
+    UICorner.CornerRadius = UDim.new(1, 0)
+    UICorner.Parent = CloseOpen
+    local function CloseOpenFunc()
+        for i,v in pairs(game:GetService("CoreGui"):FindFirstChild("ScreenGui"):GetChildren()) do
+            if v.Name == "Frame" and v:FindFirstChild("TextLabel") then
+                if v.Visible then
+                    v.Visible = false
+                    game:GetService("CoreGui"):FindFirstChild("ScreenGui").Enabled = false
+                else
+                    v.Visible = true
+                    game:GetService("CoreGui"):FindFirstChild("ScreenGui").Enabled = true
                 end
             end
-        })
-        local _0x794d = _0x1c48.Main:AddToggle(_0x7979("\1\65\1\117\1\116\1\111\1\82\1\101\1\101\1\108"), {
-            ["Title"] = _0x7979("\1\65\1\117\1\116\1\111\1\32\1\82\1\101\1\101\1\108"),
-            ["Default"] = false
-        })
-        _0x794d:OnChanged(function()
-            _G.AutoReel = _0x6b70.AutoReel.Value
-        end)
-        local _0x17e3 = _0x1c48.Main:AddToggle(_0x7979("\1\65\1\117\1\116\1\111\1\83\1\104\1\97\1\107\1\101"), {
-            ["Title"] = _0x7979("\1\65\1\117\1\116\1\111\1\32\1\83\1\104\1\97\1\107\1\101"),
-            ["Default"] = false
-        })
-        _0x17e3:OnChanged(function()
-            _G.AutoShake = _0x6b70.AutoShake.Value
-        end)
-        local _0x3642 = workspace:WaitForChild(_0x7979("\1\88\1\55\1\78\1\54\1\89")):WaitForChild(_0x7979("\1\99\1\108\1\105\1\101\1\110\1\116"))
-        if _0x3642 then
-            local _0x175c = _0x1c48.Settings:AddToggle(_0x7979("\1\100\1\105\1\115\1\97\1\98\1\108\1\101\1\79\1\120\1\121\1\103\1\101\1\110"), {
-                ["Title"] = _0x7979("\1\100\1\105\1\115\1\97\1\98\1\108\1\101\1\32\1\111\1\120\1\121\1\103\1\101\1\110"),
-                ["Default"] = false
-            })
-            _0x175c:OnChanged(function()
-                local _0x415b = _0x3642:FindFirstChild(_0x7979("\1\111\1\120\1\121\1\103\1\101\1\110"))
-                if _0x415b and _0x415b:IsA(_0x7979("\1\76\1\111\1\99\1\97\1\108\1\83\1\99\1\114\1\105\1\112\1\116")) then
-                    _0x415b.Disabled = _0x6b70.disableOxygen.Value
-                    if _0x6b70.disableOxygen.Value and _0x415b:FindFirstChild(_0x7979("\1\86\1\97\1\108\1\117\1\101")) then
-                        _0x415b.Value.Value = false
-                    end
-                end
-            end)
-            local _0x1cb0 = _0x1c48.Settings:AddToggle(_0x7979("\1\100\1\105\1\115\1\97\1\98\1\108\1\101\1\79\1\120\1\121\1\103\1\101\1\110\1\40\1\112\1\101\1\97\1\107\1\115\1\41"), {
-                ["Title"] = _0x7979("\1\100\1\105\1\115\1\97\1\98\1\108\1\101\1\32\1\111\1\120\1\121\1\103\1\101\1\110\1\40\1\112\1\101\1\97\1\107\1\115\1\41"),
-                ["Default"] = false
-            })
-            _0x1cb0:OnChanged(function()
-                local _0x5541 = _0x3642:FindFirstChild(_0x7979("\1\111\1\120\1\121\1\103\1\101\1\110\1\40\1\112\1\101\1\97\1\107\1\115\1\41"))
-                if _0x5541 and _0x5541:IsA(_0x7979("\1\76\1\111\1\99\1\97\1\108\1\83\1\99\1\114\1\105\1\112\1\116")) then
-                    _0x5541.Disabled = _0x6b70[_0x7979("\1\100\1\105\1\115\1\97\1\98\1\108\1\101\1\79\1\120\1\121\1\103\1\101\1\110\1\40\1\112\1\101\1\97\1\107\1\115\1\41")].Value
-                    if _0x6b70[_0x7979("\1\100\1\105\1\115\1\97\1\98\1\108\1\101\1\79\1\120\1\121\1\103\1\101\1\110\1\40\1\112\1\101\1\97\1\107\1\115\1\41")].Value and _0x5541:FindFirstChild(_0x7979("\1\86\1\97\1\108\1\117\1\101")) then
-                        _0x5541.Value.Value = false
-                    end
-                end
-            end)
-            local _0x7e95 = _0x1c48.Settings:AddToggle(_0x7979("\1\100\1\105\1\115\1\97\1\98\1\108\1\101\1\84\1\101
+        end
+    end
+    CloseOpen.Activated:Connect(CloseOpenFunc)
+
+	SaveManager:LoadAutoloadConfig()
+else
+	game.Players.LocalPlayer:Kick("Game not supported")
+end
