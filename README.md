@@ -1,4 +1,4 @@
-# Fluent Script for Fishing Game
+# Script for fisch
 
 This is a fisch script.
 
