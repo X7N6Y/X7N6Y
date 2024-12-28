@@ -7,7 +7,7 @@ local gameId = 16732694052
 if game.PlaceId == gameId then
 
 	local Window = Fluent:CreateWindow({
-		Title = "Fisch",
+		Title = "[UPD] Fisch",
 		SubTitle = "By Azure",
 		TabWidth = 160,
 		Size = UDim2.fromOffset(580, 460),
