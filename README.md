@@ -10,7 +10,7 @@ This is a fisch script.
 -   **Perfect Cast:** Casts your rod with perfect power.
 -   **Auto Reel:** Automatically reels in the fish when enabled.
 -   **Auto Shake:** Automatically completes shake events.
--  **Auto Drop Bobber:** Automatically drops bobber when available.
+-  **Auto Drop Bobber:** Automatically drops bobber.
 
 ### Settings Tab
 
