@@ -25,7 +25,7 @@ This is a fisch script.
 
 ## How to Use
 
-1.  **Load the Script:** '''loadstring(game:HttpGet("https://raw.githubusercontent.com/X7N6Y/X7N6Y/main/Main.lua"))()'''
+1.  **Load the Script:** `loadstring(game:HttpGet("https://raw.githubusercontent.com/X7N6Y/X7N6Y/main/Main.lua"))()`
 3.  **Access the Menu:** The Fluent UI window will appear on your screen.
 4.  **Navigate Tabs:** Use the tabs to switch between the different feature sections.
 5.  **Toggle Features:** Enable or disable features using the toggle buttons in the Main and Settings tabs.
