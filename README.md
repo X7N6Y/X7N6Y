@@ -32,7 +32,3 @@ This is a fisch script.
 1.  **Load the Script:**
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/X7N6Y/X7N6Y/main/Main.lua"))()
-
-## Credits
-
--   Created by Azure
