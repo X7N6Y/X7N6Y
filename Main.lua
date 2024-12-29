@@ -19,8 +19,10 @@ if game.PlaceId == gameId then
 	local Tabs = {
 		Home = Window:AddTab({Title = "Home", Icon = "home"}),
 		Main = Window:AddTab({ Title = "Main", Icon = "menu" }),
-        Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
-		Misc = Window:AddTab({ Title = "Misc", Icon = "settings" }),
+        Teleport = Window:AddTab({ Title = "Teleport", Icon = "gauge" }),
+        Shop = Window:AddTab({Title = "Shop", Icon = "shopping-cart"}),
+		Misc = Window:AddTab({ Title = "Misc", Icon = "folder" }),
+        Settings = Window:AddTab({ Title = "Settings", Icon = "settings-2" }),
 	}
 
 	local Options = Fluent.Options
@@ -34,58 +36,57 @@ if game.PlaceId == gameId then
     local GuiService = game:GetService("GuiService")
     local currentRod = nil
     local rodEquipped = false
+    local teleportLocation = nil
 
 
 	do
 		
-        _G.AutoCast = false
+        local AutoCast = false
+        local AutoShake = false
+        local AutoReel = false
         task.spawn(function()
             while wait() do
-                if _G.AutoCast and rodEquipped and LocalPlayer.Character:FindFirstChildOfClass('Tool') and LocalPlayer.Character:FindFirstChildOfClass('Tool'):FindFirstChild("values") and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted.Value == false then
+                 local tool = LocalPlayer.Character:FindFirstChildOfClass('Tool')
+                if AutoCast and rodEquipped and tool and tool:FindFirstChild("values") and tool.values.casted and tool.values.casted.Value == false then
                     local args = {
                         [1] = 100
                     }
-                    
-                    LocalPlayer.Character:FindFirstChildOfClass('Tool').events.cast:FireServer(unpack(args))
-                    wait(2)
+                    if tool.events and tool.events.cast then
+                        tool.events.cast:FireServer(unpack(args))
+                    end
+                     wait(2)
                 end
             end
         end)
 
 
-        _G.AutoShake = false
         task.spawn(function()
             while true do
                 task.wait(.01)
-                if _G.AutoShake then
-                    pcall(function()
-                        if LocalPlayer.Character:FindFirstChildOfClass('Tool') and LocalPlayer.Character:FindFirstChildOfClass('Tool'):FindFirstChild("values") and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted and LocalPlayer.Character:FindFirstChildOfClass('Tool').values.casted.Value == true then
-                            GuiService.SelectedObject = LocalPlayer.PlayerGui.shakeui.safezone.button
-                            if GuiService.SelectedObject == LocalPlayer.PlayerGui.shakeui.safezone.button then
-                                VirtualInputManager:SendKeyEvent(true, 13, false, LocalPlayer.Character.HumanoidRootPart)
-                                VirtualInputManager:SendKeyEvent(false, 13, false, LocalPlayer.Character.HumanoidRootPart)
-                            end
-                        end
-                    end)
+                if AutoShake then
+                   local shakeUI = LocalPlayer.PlayerGui:FindFirstChild("shakeui")
+                     if shakeUI and shakeUI.safezone and shakeUI.safezone.button then
+                            local button =  shakeUI.safezone.button
+                            GuiService.SelectedObject = button
+                            VirtualInputManager:SendKeyEvent(true, 13, false, LocalPlayer.Character.HumanoidRootPart)
+                            VirtualInputManager:SendKeyEvent(false, 13, false, LocalPlayer.Character.HumanoidRootPart)
+                    end
                 end
             end
         end)
         -- AutoReel
-        _G.AutoReel = false
         task.spawn(function()
             while true do
                 task.wait()
-                if _G.AutoReel then
-                    pcall(function()
-                        for i,v in pairs(LocalPlayer.PlayerGui:GetChildren()) do
-                            if v:IsA "ScreenGui" and v.Name == "reel"then
-                                if v:FindFirstChild "bar" then
-                                    task.wait(.15)
-                                        ReplicatedStorage.events.reelfinished:FireServer(100,true)
-                                end
-                            end
-                        end
-                    end)
+                if AutoReel then
+                   local reelGui = LocalPlayer.PlayerGui:FindFirstChild("reel")
+                     if reelGui and reelGui:IsA("ScreenGui") then
+                        local bar = reelGui:FindFirstChild("bar")
+                          if bar then
+                            task.wait(.15)
+                            ReplicatedStorage.events.reelfinished:FireServer(100,true)
+                           end
+                     end
                 end
             end
         end)
@@ -106,7 +107,7 @@ if game.PlaceId == gameId then
 
 		local AutoCastToggle = Tabs.Main:AddToggle("AutoCast", {Title = "Auto Cast", Default = false})
 		AutoCastToggle:OnChanged(function()
-			_G.AutoCast = Options.AutoCast.Value
+			AutoCast = Options.AutoCast.Value
 		end)
 		
 		Tabs.Main:AddButton({
@@ -125,12 +126,12 @@ if game.PlaceId == gameId then
 
 		local AutoReelToggle = Tabs.Main:AddToggle("AutoReel", {Title = "Auto Reel", Default = false})
 		AutoReelToggle:OnChanged(function()
-			_G.AutoReel = Options.AutoReel.Value
+			AutoReel = Options.AutoReel.Value
 		end)
         
         local AutoShakeToggle = Tabs.Main:AddToggle("AutoShake", {Title = "Auto Shake", Default = false})
         AutoShakeToggle:OnChanged(function()
-            _G.AutoShake = Options.AutoShake.Value
+            AutoShake = Options.AutoShake.Value
         end)
 		
 
@@ -149,7 +150,7 @@ if game.PlaceId == gameId then
                 end
             end)
             local disableOxygenPeaksToggle = Tabs.Misc:AddToggle("disableOxygen(peaks)", {Title = "disable oxygen(peaks)", Default = false})
-            disableOxygenPeaksToggle:OnChanged(function()
+           disableOxygenPeaksToggle:OnChanged(function()
                  local oxygenPeaksScript = clientFolder:FindFirstChild("oxygen(peaks)")
                 if oxygenPeaksScript and oxygenPeaksScript:IsA("LocalScript") then
                      oxygenPeaksScript.Disabled = Options["disableOxygen(peaks)"].Value
@@ -169,20 +170,7 @@ if game.PlaceId == gameId then
                 end
             end)
         end
-		Tabs.Settings:AddButton({
-			Title = "Get Current Outfit",
-			Description = "Copy your avatar model.",
-			Callback = function()
-                local character = LocalPlayer.Character
-                if character then
-                    local copy = character:Clone()
-					copy.Parent = workspace
-					setclipboard(game:GetService("HttpService"):JSONEncode(copy:GetDescendants()))
-					copy:Destroy()
-				end
-			end
-		})
-
+		
 		Tabs.Home:AddParagraph({
 			Title = "Credit",
 			Content = "Made by Azure"
@@ -206,10 +194,8 @@ if game.PlaceId == gameId then
 	SaveManager:SetFolder("FluentScriptHub/specific-game")
 
 	InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-    InterfaceManager:BuildInterfaceSection(Tabs.Misc)
 	SaveManager:BuildConfigSection(Tabs.Settings)
-    SaveManager:BuildConfigSection(Tabs.Misc)
-
+    
 	Window:SelectTab(1)
 
 	Fluent:Notify({
@@ -250,6 +236,38 @@ if game.PlaceId == gameId then
     end
     CloseOpen.Activated:Connect(CloseOpenFunc)
 
+    
+    local teleportDropdown = Tabs.Teleport:AddDropdown("teleportDropdown", {Title = "Choose a Spot", Values = {"None","ancientarchives","forsaken","altar","ancient","ancientarchivesentrance"}})
+    Tabs.Teleport:AddButton({
+        Title = "Teleport",
+        Description = "Teleport to the selected location",
+        Callback = function()
+          if teleportLocation and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+              local humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if humanoidRootPart then
+                    humanoidRootPart.CFrame = teleportLocation
+               end
+         end
+        end
+    })
+	
+    teleportDropdown:OnChanged(function()
+        if Options.teleportDropdown.Value == "None" then
+             teleportLocation = nil
+        elseif Options.teleportDropdown.Value == "ancientarchives" then
+            teleportLocation = CFrame.new(-3155.02222, -750.667847, 2193.13696, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+        elseif Options.teleportDropdown.Value == "forsaken" then
+            teleportLocation = CFrame.new(-2498.24585, 133.71489, 1624.8551, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+        elseif Options.teleportDropdown.Value == "altar" then
+            teleportLocation = CFrame.new(1296.32007, -808.551941, -298.918171, 0.0735510588, -0, -0.997291446, 0, 1, -0, 0.997291446, 0, 0.0735510588)
+		elseif Options.teleportDropdown.Value == "ancient" then
+			teleportLocation = CFrame.new(6056.05322, 192.225922, 278.566803, 0.573598742, 0.000578988635, 0.819136202, -0.000339840539, 0.999999821, -0.000468855433, -0.819136322, -9.44083149e-06, 0.573598862)
+		elseif Options.teleportDropdown.Value == "ancientarchivesentrance" then
+			teleportLocation = CFrame.new(5948.79053, 157.230042, 482.23584, 0.764405072, 0, 0.644736409, 0, 1, 0, -0.644736409, 0, 0.764405072)
+        end
+    end)
+    
+   
 	SaveManager:LoadAutoloadConfig()
 else
 	game.Players.LocalPlayer:Kick("Game not supported")
