@@ -9,7 +9,7 @@ local Games = {
     [17503543197] = "https://raw.githubusercontent.com/YourName/YourRepo/main/script8.lua",
     [10449761463] = "https://raw.githubusercontent.com/YourName/YourRepo/main/script9.lua",
     [18901165922] = "https://raw.githubusercontent.com/YourName/YourRepo/main/script10.lua",
-    [16732694052] = "https://raw.githubusercontent.com/YourName/YourRepo/main/script11.lua",
+    [16732694052] = "https://raw.githubusercontent.com/X7N6Y/X7N6Y/refs/heads/main/Fisch.lua",
 }
 
 return Games
