@@ -1,6 +1,1 @@
-loadstring(game:HttpGet('https://raw.githubusercontent.com/X7N6Y/X7N6Y/refs/heads/main/List.lua'))()
-for PlaceID, Execute in pairs(Games) do
-    if PlaceID == game.PlaceId then
-        loadstring(game:HttpGet(Execute))()
-    end
-end
+local a="https://raw.githubusercontent.com/X7N6Y/X7N6Y/refs/heads/main/List.lua"local b,c=pcall(function()return loadstring(game:HttpGet(a))()end)if b and c then local d=game.PlaceId;if c[d]then loadstring(game:HttpGet(c[d]))()else print("No script found for this game.")end else print("Error loading games list:",c)end
