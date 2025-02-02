@@ -1,14 +1,1 @@
-local Games = {
-  [2753915549] = "https://raw.githubusercontent.com/AhmadV99/Script-Games/main/Blox%20Fruit.lua", -- Blox Fruit Sea 1
-  [4442272183] = "https://raw.githubusercontent.com/AhmadV99/Script-Games/main/Blox%20Fruit.lua", -- Blox Fruit Sea 2
-  [7449423635] = "https://raw.githubusercontent.com/AhmadV99/Script-Games/main/Blox%20Fruit.lua", -- Blox Fruit Sea 3
-  [3623096087] = "https://raw.githubusercontent.com/AhmadV99/Script-Games/main/Muscle%20Legends.lua", -- Muscle Legends
-  [8737899170] = "https://raw.githubusercontent.com/AhmadV99/Script-Games/main/PS99.lua",  -- PS99 World 1
-  [16498369169] = "https://raw.githubusercontent.com/AhmadV99/Script-Games/main/PS99.lua",  -- PS99 World 2
-  [17503543197] = "https://raw.githubusercontent.com/AhmadV99/Script-Games/main/PS99.lua",  -- PS99 World 3
-  [10449761463] = "https://raw.githubusercontent.com/AhmadV99/Script-Games/main/The%20Strongest%20Battleground.lua",  -- The Strongest Battlegrounds
-  [18901165922] = "https://raw.githubusercontent.com/AhmadV99/Script-Games/main/Pet%20GO.lua", -- Pet GO
-  [16732694052] = "https://raw.githubusercontent.com/X7N6Y/X7N6Y/refs/heads/main/Fisch.lua", -- Fisch
-}
-
-return Games
+local a={[2753915549]="https://raw.githubusercontent.com/AhmadV99/Script-Games/main/Blox%20Fruit.lua",[4442272183]="https://raw.githubusercontent.com/AhmadV99/Script-Games/main/Blox%20Fruit.lua",[7449423635]="https://raw.githubusercontent.com/AhmadV99/Script-Games/main/Blox%20Fruit.lua",[3623096087]="https://raw.githubusercontent.com/AhmadV99/Script-Games/main/Muscle%20Legends.lua",[8737899170]="https://raw.githubusercontent.com/AhmadV99/Script-Games/main/PS99.lua",[16498369169]="https://raw.githubusercontent.com/AhmadV99/Script-Games/main/PS99.lua",[17503543197]="https://raw.githubusercontent.com/AhmadV99/Script-Games/main/PS99.lua",[10449761463]="https://raw.githubusercontent.com/AhmadV99/Script-Games/main/The%20Strongest%20Battleground.lua",[18901165922]="https://raw.githubusercontent.com/AhmadV99/Script-Games/main/Pet%20GO.lua",[16732694052]="https://raw.githubusercontent.com/X7N6Y/X7N6Y/refs/heads/main/Fisch.lua"}return a
